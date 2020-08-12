@@ -1,54 +1,70 @@
 package com.basusingh.beautifulprogressdialog;
 
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 
 import java.net.URI;
+import java.util.Objects;
 
 public class BeautifulProgressDialog {
 
-    private static final String withImage = "withImage";
-    private static final String withGIF = "withGIF";
-    private static final String withLotte = "withLotte";
+    public static final String withImage = "withImage";
+    public static final String withGIF = "withGIF";
+    public static final String withLottie = "withLottie";
     private static String viewType;
 
     private static int imageCustomType;
     private static Drawable mImageDrawable;
     private static Bitmap mImageBitmap;
-    private static int mImageInt;
+    private static Uri mImageUri;
 
     private static int gifCustomType;
-    private static int mGifUriInt;
-    private static String mGifUriString;
+    private static Uri mGifUri;
+    private static String mGifString;
 
-    private static String mLotteUrl;
+    private static String mLottieUrl;
+    private static boolean lottieLoop = true;
+    LottieAnimationView animationView;
 
     private static String mMessage;
     private static boolean showMessage = false;
     private static boolean cancelableOnTouchOutside = false;
     private static boolean cancelable = false;
-    private Context mContext;
-    private Activity mActivity;
-    private Dialog mDialog;
+    private Activity mContext;
+    private AlertDialog alertDialog;
+    View dialogView;
+
     private int cardViewColor = android.R.color.white;
     private float cardViewRadius = 15f;
     private float cardViewElevation = 3f;
 
-    public BeautifulProgressDialog(Activity activity, String type, String message) throws Exception{
-        this.mActivity = activity;
+    private int topPadding, bottomPadding, leftPadding, rightPadding, overallPadding;
+
+    public BeautifulProgressDialog(Activity activity, String type, String message){
+        this.mContext = activity;
         switch (type){
             case withImage:
                 viewType = withImage;
@@ -56,11 +72,9 @@ public class BeautifulProgressDialog {
             case withGIF:
                 viewType = withGIF;
                 break;
-            case withLotte:
-                viewType = withLotte;
+            case withLottie:
+                viewType = withLottie;
                 break;
-            default:
-                throw new Exception("Type must be of the one defined");
         }
         if(message == null){
             removeMessage();
@@ -68,9 +82,41 @@ public class BeautifulProgressDialog {
             showMessage(true);
             mMessage = message;
         }
-        mDialog  = new Dialog(mActivity);
-        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        mDialog.setContentView(R.layout.layout_progress_dialog);
+        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity);
+        dialogView = LayoutInflater.from(activity).inflate(R.layout.layout_progress_dialog, null);
+        dialogBuilder.setView(dialogView);
+        alertDialog = dialogBuilder.create();
+        //Objects.requireNonNull(alertDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+    }
+
+    /**
+     * Convert padding from dp to px.
+     */
+
+    private void setUpPadding(){
+        topPadding = dpToPx(15);
+        bottomPadding = dpToPx(15);
+        leftPadding = dpToPx(30);
+        rightPadding = dpToPx(30);
+        overallPadding = dpToPx(20);
+    }
+
+    /**
+     * Set view type. Must be one of the defined.
+     * @param type
+     * @throws Exception
+     */
+
+    public void setViewType(String type) throws Exception{
+        switch (type){
+            case withImage:
+            case withGIF:
+            case withLottie:
+                viewType = type;
+                break;
+            default:
+                throw new Exception("Type must be of the one defined");
+        }
     }
 
     /**
@@ -133,10 +179,7 @@ public class BeautifulProgressDialog {
      * @throws Exception
      */
 
-    public void setImageLocation(Drawable drawable) throws Exception{
-        if(!viewType.equalsIgnoreCase(withImage)){
-            throw new Exception("Must set view type to Image");
-        }
+    public void setImageLocation(Drawable drawable){
         mImageDrawable = drawable;
         imageCustomType = 1;
     }
@@ -147,10 +190,7 @@ public class BeautifulProgressDialog {
      * @throws Exception
      */
 
-    public void setImageLocation(Bitmap bitmap) throws Exception{
-        if(!viewType.equalsIgnoreCase(withImage)){
-            throw new Exception("Must set view type to Image");
-        }
+    public void setImageLocation(Bitmap bitmap){
         mImageBitmap = bitmap;
         imageCustomType = 2;
     }
@@ -161,11 +201,8 @@ public class BeautifulProgressDialog {
      * @throws Exception
      */
 
-    public void setImageLocation(int location) throws Exception{
-        if(!viewType.equalsIgnoreCase(withImage)){
-            throw new Exception("Must set view type to Image");
-        }
-        mImageInt = location;
+    public void setImageLocation(Uri location){
+        mImageUri = location;
         imageCustomType = 3;
     }
 
@@ -175,11 +212,8 @@ public class BeautifulProgressDialog {
      * @throws Exception
      */
 
-    public void setGifLocation(int gifLocation) throws Exception{
-        if(!viewType.equalsIgnoreCase(withGIF)){
-            throw new Exception("Must set view type to GIF");
-        }
-        mGifUriInt = gifLocation;
+    public void setGifLocation(Uri gifLocation){
+        mGifUri = gifLocation;
         gifCustomType = 1;
     }
 
@@ -189,25 +223,28 @@ public class BeautifulProgressDialog {
      * @throws Exception
      */
 
-    public void setGifLocation(String gifLocation) throws Exception{
-        if(!viewType.equalsIgnoreCase(withGIF)){
-            throw new Exception("Must set view type to GIF");
-        }
-        mGifUriString = gifLocation;
+    public void setGifLocation(String gifLocation){
+        mGifString = gifLocation;
         gifCustomType = 2;
     }
 
     /**
-     * Set Lotte string resource. User must set withLotte as view type
+     * Set Lottie string resource. User must set withLottie as view type
      * @param url
      * @throws Exception
      */
 
-    public void setLotteLocation(String url) throws Exception{
-        if(!viewType.equalsIgnoreCase(withLotte)){
-            throw new Exception("Must set view type to Lotte");
-        }
-        mLotteUrl = url;
+    public void setLottieLocation(String url){
+        mLottieUrl = url;
+    }
+
+    /**
+     * Set loop for Lottie animation
+     * @param value
+     */
+
+    public void setLottieLoop(boolean value){
+        lottieLoop = value;
     }
 
     /**
@@ -234,42 +271,105 @@ public class BeautifulProgressDialog {
      */
 
     @SuppressLint("ResourceAsColor")
-    public void setUpProgressDialog() throws Exception{
+    public void setUpProgressDialog(){
         if(viewType == null){
-            throw new Exception("Must set view type first");
+            Log.e("View Type", "Null");
+            return;
         }
         if(showMessage && mMessage == null){
-            throw new Exception("Must set message");
+            Log.e("Show Message", "Error");
+            return;
         }
-        mDialog.setCancelable(cancelable);
-        mDialog.setCanceledOnTouchOutside(cancelableOnTouchOutside);
+        Log.e("Setting up", "1");
+        alertDialog.setCanceledOnTouchOutside(cancelableOnTouchOutside);
+        alertDialog.setCancelable(cancelable);
+        setUpPadding();
 
-        CardView parent = mDialog.findViewById(R.id.parent);
+        CardView parent = dialogView.findViewById(R.id.parent);
         parent.setBackgroundColor(cardViewColor);
         parent.setRadius(cardViewRadius);
         parent.setElevation(cardViewElevation);
 
-        LinearLayout interiorLayout = mDialog.findViewById(R.id.interior_layout);
-        ImageView imageView = mDialog.findViewById(R.id.imageView);
-        TextView message = mDialog.findViewById(R.id.message);
+        LinearLayout interiorLayout = dialogView.findViewById(R.id.interior_layout);
+        ImageView imageView = dialogView.findViewById(R.id.imageView);
+        TextView message = dialogView.findViewById(R.id.message);
+
+        Log.e("View Type", viewType);
+        switch (viewType){
+            case withImage:
+                switch (imageCustomType){
+                    case 1:
+                        imageView.setImageDrawable(mImageDrawable);
+                        Log.e("Setting up", "Image Drawable");
+                        break;
+                    case 2:
+                        imageView.setImageBitmap(mImageBitmap);
+                        break;
+                    case 3:
+                        imageView.setImageURI(mImageUri);
+                        break;
+                }
+                break;
+            case withGIF:
+                switch (gifCustomType){
+                    case 1:
+                        Glide.with(mContext)
+                                .load(mGifUri)
+                                .into(imageView);
+                        break;
+                    case 2:
+                        Glide.with(mContext)
+                                .load(mGifString)
+                                .into(imageView);
+                        break;
+                }
+                break;
+            case withLottie:
+                if(animationView == null){
+                    animationView = dialogView.findViewById(R.id.lottie);
+                }
+                animationView.setAnimation(mLottieUrl);
+                animationView.setRepeatCount(lottieLoop ? ValueAnimator.INFINITE: 0);
+                break;
+        }
 
 
-
-        GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(gifImageView);
-        Glide.with(activity)
-                .load(R.drawable.loading)
-                .placeholder(R.drawable.loading)
-                .centerCrop()
-                .crossFade()
-                .into(imageViewTarget);
+        if(showMessage){
+            message.setText(mMessage);
+            message.setVisibility(View.VISIBLE);
+            interiorLayout.setPadding(leftPadding, topPadding, rightPadding, bottomPadding);
+        } else {
+            message.setVisibility(View.GONE);
+            interiorLayout.setPadding(overallPadding, overallPadding, overallPadding, overallPadding);
+        }
+        Log.e("Setting up", "2");
     }
+
+    /**
+     * Show progress dialog
+     */
 
     public void show(){
-        mDialog.show();
+        if (viewType.equalsIgnoreCase(withLottie) && animationView != null){
+            animationView.playAnimation();
+        }
+        alertDialog.show();
     }
 
+    /**
+     * Dismiss progress dialog
+     */
+
     public void dismiss(){
-        mDialog.dismiss();
+        alertDialog.dismiss();
+    }
+
+    /**
+     * Convert padding from dp to px.
+     */
+
+    public static int dpToPx(int dp) {
+        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
 
 }
