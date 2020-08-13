@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         if(getSupportActionBar() != null){
-            getSupportActionBar().setTitle("Beautiful Progress Bar");
+            getSupportActionBar().setTitle("Beautiful Progress Dialog");
         }
 
         Button image = findViewById(R.id.image);
@@ -40,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 progressDialog = new BeautifulProgressDialog(MainActivity.this, BeautifulProgressDialog.withImage, null);
                 progressDialog.setImageLocation(getResources().getDrawable(R.drawable.ic_hand_black));
+                progressDialog.setLayoutColor(getResources().getColor(R.color.white));
+                progressDialog.setLayoutRadius(15f);
+                progressDialog.setLayoutElevation(3f);
                 progressDialog.setUpProgressDialog();
                 progressDialog.show();
                 new Handler().postDelayed(new Runnable() {

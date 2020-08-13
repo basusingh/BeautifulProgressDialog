@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -86,7 +87,12 @@ public class BeautifulProgressDialog {
         dialogView = LayoutInflater.from(activity).inflate(R.layout.layout_progress_dialog, null);
         dialogBuilder.setView(dialogView);
         alertDialog = dialogBuilder.create();
-        //Objects.requireNonNull(alertDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Objects.requireNonNull(alertDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        layoutParams.copyFrom(alertDialog.getWindow().getAttributes());
+        layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        alertDialog.getWindow().setAttributes(layoutParams);
     }
 
     /**
@@ -285,18 +291,21 @@ public class BeautifulProgressDialog {
         alertDialog.setCancelable(cancelable);
         setUpPadding();
 
-        CardView parent = dialogView.findViewById(R.id.parent);
-        parent.setBackgroundColor(cardViewColor);
-        parent.setRadius(cardViewRadius);
-        parent.setElevation(cardViewElevation);
+        //CardView parent = dialogView.findViewById(R.id.parent);
+        //parent.setBackgroundColor(cardViewColor);
+        //parent.setRadius(cardViewRadius);
+        //parent.setElevation(cardViewElevation);
 
         LinearLayout interiorLayout = dialogView.findViewById(R.id.interior_layout);
         ImageView imageView = dialogView.findViewById(R.id.imageView);
         TextView message = dialogView.findViewById(R.id.message);
+        animationView = dialogView.findViewById(R.id.lottie);
 
         Log.e("View Type", viewType);
         switch (viewType){
             case withImage:
+                imageView.setVisibility(View.VISIBLE);
+                animationView.setVisibility(View.GONE);
                 switch (imageCustomType){
                     case 1:
                         imageView.setImageDrawable(mImageDrawable);
@@ -311,6 +320,8 @@ public class BeautifulProgressDialog {
                 }
                 break;
             case withGIF:
+                imageView.setVisibility(View.VISIBLE);
+                animationView.setVisibility(View.GONE);
                 switch (gifCustomType){
                     case 1:
                         Glide.with(mContext)
@@ -325,9 +336,8 @@ public class BeautifulProgressDialog {
                 }
                 break;
             case withLottie:
-                if(animationView == null){
-                    animationView = dialogView.findViewById(R.id.lottie);
-                }
+                imageView.setVisibility(View.GONE);
+                animationView.setVisibility(View.VISIBLE);
                 animationView.setAnimation(mLottieUrl);
                 animationView.setRepeatCount(lottieLoop ? ValueAnimator.INFINITE: 0);
                 break;
@@ -338,9 +348,11 @@ public class BeautifulProgressDialog {
             message.setText(mMessage);
             message.setVisibility(View.VISIBLE);
             interiorLayout.setPadding(leftPadding, topPadding, rightPadding, bottomPadding);
+            //parent.setLayoutParams(new LinearLayout.LayoutParams(120, 120));
         } else {
             message.setVisibility(View.GONE);
             interiorLayout.setPadding(overallPadding, overallPadding, overallPadding, overallPadding);
+            //parent.setLayoutParams(new LinearLayout.LayoutParams(120, 120));
         }
         Log.e("Setting up", "2");
     }
@@ -361,6 +373,9 @@ public class BeautifulProgressDialog {
      */
 
     public void dismiss(){
+        if (viewType.equalsIgnoreCase(withLottie) && animationView != null){
+            animationView.cancelAnimation();
+        }
         alertDialog.dismiss();
     }
 
