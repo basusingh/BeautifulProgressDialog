@@ -40,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 progressDialog = new BeautifulProgressDialog(MainActivity.this, BeautifulProgressDialog.withImage, null);
                 progressDialog.setImageLocation(getResources().getDrawable(R.drawable.ic_hand_black));
-                progressDialog.setLayoutColor(getResources().getColor(R.color.white));
-                progressDialog.setLayoutRadius(15f);
+                progressDialog.setLayoutColor(getResources().getColor(R.color.colorAccent));
+                progressDialog.setLayoutRadius(50f);
                 progressDialog.setLayoutElevation(3f);
                 progressDialog.setUpProgressDialog();
                 progressDialog.show();
@@ -57,10 +57,7 @@ public class MainActivity extends AppCompatActivity {
         gif.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog = new BeautifulProgressDialog(MainActivity.this, BeautifulProgressDialog.withGIF, "Please wait");
-                progressDialog.setLayoutColor(getResources().getColor(R.color.black));
-                progressDialog.setLayoutRadius(15f);
-                progressDialog.setLayoutElevation(3f);
+
             }
         });
         Button lottie = findViewById(R.id.lottie);

@@ -55,7 +55,7 @@ public class BeautifulProgressDialog {
     private static boolean cancelableOnTouchOutside = false;
     private static boolean cancelable = false;
     private Activity mContext;
-    private AlertDialog alertDialog;
+    private Dialog alertDialog;
     View dialogView;
 
     private int cardViewColor = android.R.color.white;
@@ -83,16 +83,22 @@ public class BeautifulProgressDialog {
             showMessage(true);
             mMessage = message;
         }
+        alertDialog  = new Dialog(activity);
+        alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogView = LayoutInflater.from(activity).inflate(R.layout.layout_progress_dialog, null);
+        alertDialog.setContentView(dialogView);
+        Objects.requireNonNull(alertDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+
+        /**
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity);
         dialogView = LayoutInflater.from(activity).inflate(R.layout.layout_progress_dialog, null);
         dialogBuilder.setView(dialogView);
         alertDialog = dialogBuilder.create();
+        alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         Objects.requireNonNull(alertDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-        layoutParams.copyFrom(alertDialog.getWindow().getAttributes());
-        layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
-        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        alertDialog.getWindow().setAttributes(layoutParams);
+         **/
+
     }
 
     /**
@@ -286,15 +292,14 @@ public class BeautifulProgressDialog {
             Log.e("Show Message", "Error");
             return;
         }
-        Log.e("Setting up", "1");
         alertDialog.setCanceledOnTouchOutside(cancelableOnTouchOutside);
         alertDialog.setCancelable(cancelable);
         setUpPadding();
 
-        //CardView parent = dialogView.findViewById(R.id.parent);
-        //parent.setBackgroundColor(cardViewColor);
-        //parent.setRadius(cardViewRadius);
-        //parent.setElevation(cardViewElevation);
+        CardView parent = dialogView.findViewById(R.id.parent);
+        parent.setBackgroundColor(cardViewColor);
+        parent.setRadius(cardViewRadius);
+        parent.setElevation(cardViewElevation);
 
         LinearLayout interiorLayout = dialogView.findViewById(R.id.interior_layout);
         ImageView imageView = dialogView.findViewById(R.id.imageView);
@@ -354,7 +359,6 @@ public class BeautifulProgressDialog {
             interiorLayout.setPadding(overallPadding, overallPadding, overallPadding, overallPadding);
             //parent.setLayoutParams(new LinearLayout.LayoutParams(120, 120));
         }
-        Log.e("Setting up", "2");
     }
 
     /**
