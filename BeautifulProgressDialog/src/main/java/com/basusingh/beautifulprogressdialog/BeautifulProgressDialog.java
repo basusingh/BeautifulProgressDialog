@@ -1,13 +1,16 @@
 package com.basusingh.beautifulprogressdialog;
 
+import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -16,17 +19,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.cardview.widget.CardView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 
+import java.io.File;
 import java.net.URI;
 import java.util.Objects;
 
@@ -37,18 +43,25 @@ public class BeautifulProgressDialog {
     public static final String withLottie = "withLottie";
     private static String viewType;
 
+    private static int rounderCorner = 2;
+    public static int CORNER_TYPE_LOW = 1;
+    public static int CORNER_TYPE_MED = 2;
+    public static int CORNER_TYPE_HIGH = 3;
+    public static int CORNER_TYPE_ULTRA_HIGH = 4;
+
     private static int imageCustomType;
     private static Drawable mImageDrawable;
     private static Bitmap mImageBitmap;
     private static Uri mImageUri;
 
-    private static int gifCustomType;
     private static Uri mGifUri;
-    private static String mGifString;
 
     private static String mLottieUrl;
     private static boolean lottieLoop = true;
+    private static boolean lottieCompactPadding = true;
     LottieAnimationView animationView;
+
+    private static String mFontFamily = null;
 
     private static String mMessage;
     private static boolean showMessage = false;
@@ -88,6 +101,14 @@ public class BeautifulProgressDialog {
         dialogView = LayoutInflater.from(activity).inflate(R.layout.layout_progress_dialog, null);
         alertDialog.setContentView(dialogView);
         Objects.requireNonNull(alertDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                if (animationView.isAnimating()){
+                    animationView.cancelAnimation();
+                }
+            }
+        });
 
 
         /**
@@ -111,6 +132,27 @@ public class BeautifulProgressDialog {
         leftPadding = dpToPx(30);
         rightPadding = dpToPx(30);
         overallPadding = dpToPx(20);
+    }
+
+    /**
+     * Set rounded corner type
+     * @param type
+     */
+
+    //TODO
+    private void setRoundedCorner(int type){
+        if(type <= 4 && type>=1){
+            rounderCorner = type;
+        }
+    }
+
+    /**
+     * Set custom font for the message
+     * @param font
+     */
+
+    public void setFont(String font){
+        mFontFamily = font;
     }
 
     /**
@@ -144,7 +186,8 @@ public class BeautifulProgressDialog {
      * @param radius
      */
 
-    public void setLayoutRadius(float radius){
+    //TODO
+    private void setLayoutRadius(float radius){
         this.cardViewRadius = radius;
     }
 
@@ -153,7 +196,8 @@ public class BeautifulProgressDialog {
      * @param elevation
      */
 
-    public void setLayoutElevation(float elevation){
+    //TODO
+    private void setLayoutElevation(float elevation){
         this.cardViewElevation = elevation;
     }
 
@@ -226,18 +270,6 @@ public class BeautifulProgressDialog {
 
     public void setGifLocation(Uri gifLocation){
         mGifUri = gifLocation;
-        gifCustomType = 1;
-    }
-
-    /**
-     * Set GIF string resource (URL or local). User must set withGIF as view type
-     * @param gifLocation
-     * @throws Exception
-     */
-
-    public void setGifLocation(String gifLocation){
-        mGifString = gifLocation;
-        gifCustomType = 2;
     }
 
     /**
@@ -257,6 +289,10 @@ public class BeautifulProgressDialog {
 
     public void setLottieLoop(boolean value){
         lottieLoop = value;
+    }
+
+    public void setLottieCompactPadding(boolean value){
+        lottieCompactPadding = value;
     }
 
     /**
@@ -296,9 +332,26 @@ public class BeautifulProgressDialog {
         alertDialog.setCancelable(cancelable);
         setUpPadding();
 
-        CardView parent = dialogView.findViewById(R.id.parent);
+        CardView parent;
+        /**
+        parent = new CardView(new ContextThemeWrapper(mContext, R.style.RoundedCornersDialog_High));
+        switch (rounderCorner){
+            case 1:
+                parent = new CardView(new ContextThemeWrapper(mContext, R.style.RoundedCornersDialog_Low));
+                break;
+            case 2:
+                parent = new CardView(new ContextThemeWrapper(mContext, R.style.RoundedCornersDialog_Mid));
+                break;
+            case 3:
+                parent = new CardView(new ContextThemeWrapper(mContext, R.style.RoundedCornersDialog_High));
+                break;
+            case 4:
+                parent = new CardView(new ContextThemeWrapper(mContext, R.style.RoundedCornersDialog_Ultra_High));
+                break;
+        }
+         **/
+        parent = dialogView.findViewById(R.id.parent);
         parent.setBackgroundColor(cardViewColor);
-        parent.setRadius(cardViewRadius);
         parent.setElevation(cardViewElevation);
 
         LinearLayout interiorLayout = dialogView.findViewById(R.id.interior_layout);
@@ -306,7 +359,6 @@ public class BeautifulProgressDialog {
         TextView message = dialogView.findViewById(R.id.message);
         animationView = dialogView.findViewById(R.id.lottie);
 
-        Log.e("View Type", viewType);
         switch (viewType){
             case withImage:
                 imageView.setVisibility(View.VISIBLE);
@@ -314,7 +366,6 @@ public class BeautifulProgressDialog {
                 switch (imageCustomType){
                     case 1:
                         imageView.setImageDrawable(mImageDrawable);
-                        Log.e("Setting up", "Image Drawable");
                         break;
                     case 2:
                         imageView.setImageBitmap(mImageBitmap);
@@ -327,18 +378,9 @@ public class BeautifulProgressDialog {
             case withGIF:
                 imageView.setVisibility(View.VISIBLE);
                 animationView.setVisibility(View.GONE);
-                switch (gifCustomType){
-                    case 1:
-                        Glide.with(mContext)
-                                .load(mGifUri)
-                                .into(imageView);
-                        break;
-                    case 2:
-                        Glide.with(mContext)
-                                .load(mGifString)
-                                .into(imageView);
-                        break;
-                }
+                Glide.with(mContext)
+                        .load(mGifUri)
+                        .into(imageView);
                 break;
             case withLottie:
                 imageView.setVisibility(View.GONE);
@@ -352,12 +394,27 @@ public class BeautifulProgressDialog {
         if(showMessage){
             message.setText(mMessage);
             message.setVisibility(View.VISIBLE);
+            if(mFontFamily != null){
+                try{
+                    Typeface face = Typeface.createFromAsset(mContext.getAssets(),
+                            mFontFamily);
+                    message.setTypeface(face);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
             interiorLayout.setPadding(leftPadding, topPadding, rightPadding, bottomPadding);
-            //parent.setLayoutParams(new LinearLayout.LayoutParams(120, 120));
         } else {
             message.setVisibility(View.GONE);
-            interiorLayout.setPadding(overallPadding, overallPadding, overallPadding, overallPadding);
-            //parent.setLayoutParams(new LinearLayout.LayoutParams(120, 120));
+            if(!viewType.equalsIgnoreCase(withLottie)){
+                interiorLayout.setPadding(overallPadding, overallPadding, overallPadding, overallPadding);
+            } else {
+                if (lottieCompactPadding) {
+                    interiorLayout.setPadding(0, 0, 0, 0);
+                } else {
+                    interiorLayout.setPadding(overallPadding, overallPadding, overallPadding, overallPadding);
+                }
+            }
         }
     }
 

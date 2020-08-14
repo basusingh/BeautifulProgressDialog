@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="RoundedCornersDialog_Low" parent="@style/Theme.MaterialComponents.Dialog">
+        <item name="dialogCornerRadius">5dp</item>
+    </style>
+    <style name="RoundedCornersDialog_Mid" parent="@style/Theme.MaterialComponents.Dialog">
+        <item name="dialogCornerRadius">15dp</item>
+    </style>
+    <style name="RoundedCornersDialog_High" parent="@style/Theme.MaterialComponents.Dialog">
+        <item name="dialogCornerRadius">25dp</item>
+    </style>
+    <style name="RoundedCornersDialog_Ultra_High" parent="@style/Theme.MaterialComponents.Dialog">
+        <item name="dialogCornerRadius">35dp</item>
+    </style>
+</resources>

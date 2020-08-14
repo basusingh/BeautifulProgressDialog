@@ -41,6 +41,7 @@
             android:textColor="@android:color/black"
             android:visibility="gone"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/avenir_bold"
             android:text="Hello"
             android:layout_gravity="center_horizontal"/>
         

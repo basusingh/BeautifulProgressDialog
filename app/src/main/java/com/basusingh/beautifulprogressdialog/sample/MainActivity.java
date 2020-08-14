@@ -2,6 +2,7 @@ package com.basusingh.beautifulprogressdialog.sample;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.basusingh.beautifulprogressdialog.BeautifulProgressDialog;
@@ -17,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 
+import java.io.File;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,11 +40,9 @@ public class MainActivity extends AppCompatActivity {
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog = new BeautifulProgressDialog(MainActivity.this, BeautifulProgressDialog.withImage, null);
-                progressDialog.setImageLocation(getResources().getDrawable(R.drawable.ic_hand_black));
-                progressDialog.setLayoutColor(getResources().getColor(R.color.colorAccent));
-                progressDialog.setLayoutRadius(50f);
-                progressDialog.setLayoutElevation(3f);
+                progressDialog = new BeautifulProgressDialog(MainActivity.this, BeautifulProgressDialog.withImage, "Please wait");
+                progressDialog.setImageLocation(getResources().getDrawable(R.drawable.burger_logo));
+                progressDialog.setLayoutColor(getResources().getColor(R.color.cream));
                 progressDialog.setUpProgressDialog();
                 progressDialog.show();
                 new Handler().postDelayed(new Runnable() {
@@ -50,14 +50,25 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         progressDialog.dismiss();
                     }
-                }, 5000);
+                }, 8000);
             }
         });
         Button gif = findViewById(R.id.gif);
         gif.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                progressDialog = new BeautifulProgressDialog(MainActivity.this, BeautifulProgressDialog.withGIF, null);
+                Uri myUri = Uri.fromFile(new File("//android_asset/sample_gif_1.gif"));
+                progressDialog.setGifLocation(myUri);
+                progressDialog.setLayoutColor(getResources().getColor(R.color.white));
+                progressDialog.setUpProgressDialog();
+                progressDialog.show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.dismiss();
+                    }
+                }, 8000);
             }
         });
         Button lottie = findViewById(R.id.lottie);
@@ -65,25 +76,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 progressDialog = new BeautifulProgressDialog(MainActivity.this, BeautifulProgressDialog.withLottie, null);
-                openOtpVerificationDialog();
+                progressDialog.setLottieLocation("lottie_1.json");
+                progressDialog.setLottieLoop(true);
+                progressDialog.setLottieCompactPadding(true);
+                progressDialog.setLayoutColor(getResources().getColor(R.color.white));
+                progressDialog.setUpProgressDialog();
+                progressDialog.show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.dismiss();
+                    }
+                }, 8000);
             }
         });
 
 
-    }
-
-    private void openOtpVerificationDialog(){
-        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MainActivity.this);
-        LayoutInflater inflater = this.getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.layout_progress_dialog, null);
-        dialogBuilder.setView(dialogView);
-        AlertDialog alertDialog;
-        alertDialog = dialogBuilder.create();
-        alertDialog.setCanceledOnTouchOutside(false);
-        alertDialog.setCancelable(false);
-        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        alertDialog.show();
     }
 
 }
