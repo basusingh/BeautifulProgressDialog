@@ -5,11 +5,11 @@ To add BeautifulProgressDialog into youyr app,
 Step 1. Add the JitPack repository to your build file
 ```
 allprojects {
-		repositories {
+        repositories {
 			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
+            maven { url 'https://jitpack.io' }
+        }
+    }
   ```
   Step 2. Add the dependency
   ```
@@ -17,4 +17,4 @@ allprojects {
 	        implementation 'com.github.basusingh:BeautifulProgressDialog:$CurrentVersion'
 	}
   ```
-  [![](https://jitpack.io/v/basusingh/BeautifulProgressDialog.svg)](https://jitpack.io/#basusingh/BeautifulProgressDialog)
+ Current Version:  [![](https://jitpack.io/v/basusingh/BeautifulProgressDialog.svg)](https://jitpack.io/#basusingh/BeautifulProgressDialog)
