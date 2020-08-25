@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
         lottie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog.setViewType(BeautifulProgressDialog.withGIF);
                 progressDialog = new BeautifulProgressDialog(MainActivity.this, BeautifulProgressDialog.withLottie, null);
                 progressDialog.setLottieLocation("lottie_1.json");
                 progressDialog.setLottieLoop(true);
