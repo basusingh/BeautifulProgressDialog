@@ -29,7 +29,7 @@ allprojects {
  									BeautifulProgressDialog.withImage,
 									    "Please wait");
  ```
- View Type:
+ **View Type:**
  ```
 BeautifulProgressDialog.withImage
 BeautifulProgressDialog.withGIF
@@ -84,7 +84,7 @@ progressDialog.setViewType(BeautifulProgressDialog.withGIF);
 ```
 **Don't forget to change the source of each view type**
 
-Available method:
+Available methods:
 ```
 //Set Image Resource
 setImageLocation(Drawable drawable)
