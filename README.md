@@ -3,7 +3,7 @@ Brush up your mobile app with customized Progress Dialog. Beautiful Progress Dia
 
 ![GIF Dialog](View_GIF.gif) ![Image Dialog](View_Image.gif) ![Lottie Dialog](View_Lottie.gif)
 
-To add BeautifulProgressDialog into youyr app,
+To add BeautifulProgressDialog into youy app,
 Step 1. Add the JitPack repository to your build file
 ```
 allprojects {
