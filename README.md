@@ -1,7 +1,7 @@
 # BeautifulProgressDialog
 Brush up your mobile app with customized Progress Dialog. Beautiful Progress Dialog is a small library that let you show custom Progress Dialog into your app. It can show static images, GIFs and the new Lottie Animation.
 
-![](View_GIF.gif) ![](View_Image.gif) ![](View_Lottie.gif)
+![GIF Dialog](View_GIF.gif) ![Image Dialog](View_Image.gif) ![Lottie Dialog](View_Lottie.gif)
 
 To add BeautifulProgressDialog into youyr app,
 Step 1. Add the JitPack repository to your build file
