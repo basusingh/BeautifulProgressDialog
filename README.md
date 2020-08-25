@@ -1,6 +1,8 @@
 # BeautifulProgressDialog
 Brush up your mobile app with customized Progress Dialog. Beautiful Progress Dialog is a small library that let you show custom Progress Dialog into your app. It can show static images, GIFs and the new Lottie Animation.
 
+![](View_GIF.gif) ![](View_Image.gif) ![](View_Lottie.gif)
+
 To add BeautifulProgressDialog into youyr app,
 Step 1. Add the JitPack repository to your build file
 ```
@@ -24,7 +26,9 @@ allprojects {
  **Create a dialog**
  ```
  //Params: Context, View Type, Text Message
- BeautifulProgressDialog progressDialog = new BeautifulProgressDialog(MainActivity.this, BeautifulProgressDialog.withImage, "Please wait");
+ BeautifulProgressDialog progressDialog = new BeautifulProgressDialog(MainActivity.this, 
+ 									BeautifulProgressDialog.withImage,
+									    "Please wait");
  ```
  View Type:
  ```
