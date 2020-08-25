@@ -19,9 +19,9 @@ allprojects {
   ```
  Current Version:  [![](https://jitpack.io/v/basusingh/BeautifulProgressDialog.svg)](https://jitpack.io/#basusingh/BeautifulProgressDialog)
  
- **##Create a Progress Dialog**
+ **Create a Progress Dialog**
  ________________________________________________
- **###Create a dialog**
+ **Create a dialog**
  ```
  //Params: Context, View Type, Text Message
  BeautifulProgressDialog progressDialog = new BeautifulProgressDialog(MainActivity.this, BeautifulProgressDialog.withImage, "Please wait");
@@ -34,21 +34,21 @@ BeautifulProgressDialog.withLottie
 ```
 
 
-**###Create an Image Dialog with Text Message**
+**Create an Image Dialog with Text Message**
 ```
 progressDialog = new BeautifulProgressDialog(MainActivity.this, BeautifulProgressDialog.withImage, "Please wait");
 progressDialog.setImageLocation(getResources().getDrawable(R.drawable.burger_logo));
 progressDialog.setLayoutColor(getResources().getColor(R.color.cream));
 ```
 
-**###Create a GIF Dialog without Text Message**
+**Create a GIF Dialog without Text Message**
 ```
 progressDialog = new BeautifulProgressDialog(MainActivity.this, BeautifulProgressDialog.withGIF, null);
 Uri myUri = Uri.fromFile(new File("//android_asset/sample_gif_1.gif"));
 progressDialog.setGifLocation(myUri);
 ```
 
-**###Create a Lottie Animation Dialog without Text Message**
+**Create a Lottie Animation Dialog without Text Message**
 ```
 progressDialog = new BeautifulProgressDialog(MainActivity.this, BeautifulProgressDialog.withLottie, null);
 progressDialog.setLottieLocation("lottie_1.json");
@@ -56,26 +56,26 @@ progressDialog.setLottieLocation("lottie_1.json");
 progressDialog.setLottieLoop(true);
 ```
 
-**###Show the Dialog**
+**Show the Dialog**
 ```
 progressDialog.show();
 ```
 
-**#Dismiss the Dialog**
+**Dismiss the Dialog**
 ```
 progressDialog.dismiss();
 ```
 
 _________________________________________________
 
-**##Additional Style**
+**Additional Style**
 
-**###Set Background Color**
+**Set Background Color**
 ```
 progressDialog.setLayoutColor(getResources().getColor(R.color.MY_COLOR_NAME));
 ```
 
-**###Change View Type**
+**Change View Type**
 ```
 progressDialog.setViewType(BeautifulProgressDialog.withGIF);
 ```
@@ -95,23 +95,23 @@ setGifLocation(Uri gifLocation)
 setLottieLocation(String url)
 ```
 
-**###Custom font for the message**
+**Custom font for the message**
 ```
 //By default, the font is avenir_bold
 setFont(String font)
 ```
 
-**###Change message**
+**Change message**
 ```
 setMessage(String text)
 ```
 
-**###Remove message**
+**Remove message**
 ```
 removeMessage()
 ```
 
-**###Additional Methods:**
+**Additional Methods:**
 ```
 //Dialog cancelable on touch outside
 setCancelableOnTouchOutside(boolean value)
