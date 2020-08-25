@@ -1,49 +1,71 @@
 package com.basusingh.beautifulprogressdialog.sample;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.animation.Animator;
+import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
 import com.basusingh.beautifulprogressdialog.BeautifulProgressDialog;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Handler;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import java.io.File;
-import java.util.Objects;
+
+import jp.wasabeef.blurry.Blurry;
 
 public class MainActivity extends AppCompatActivity {
 
     BeautifulProgressDialog progressDialog;
+    View colorBackground;
+    ImageView backgroundImage;
+    AnimationDrawable animationDrawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        if(getSupportActionBar() != null){
-            getSupportActionBar().setTitle("Beautiful Progress Dialog");
-        }
+        backgroundImage = findViewById(R.id.backgroundImage);
+        colorBackground = findViewById(R.id.colorBackground);
 
-        Button image = findViewById(R.id.image);
+        animationDrawable = (AnimationDrawable) colorBackground.getBackground();
+        animationDrawable.setEnterFadeDuration(1000);
+        animationDrawable.setExitFadeDuration(3000);
+
+        backgroundImage.animate()
+                .alpha(0.56f)
+                .setInterpolator(new DecelerateInterpolator())
+                .setDuration(500)
+                .setListener(null);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Bitmap icon = BitmapFactory.decodeResource(getResources(),
+                        R.drawable.bg_small);
+                Blurry.with(getApplicationContext()).radius(70).from(icon).into(backgroundImage);
+            }
+        }, 500);
+
+        FrameLayout image = findViewById(R.id.image);
         image.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onClick(View v) {
                 progressDialog = new BeautifulProgressDialog(MainActivity.this, BeautifulProgressDialog.withImage, "Please wait");
                 progressDialog.setImageLocation(getResources().getDrawable(R.drawable.burger_logo));
                 progressDialog.setLayoutColor(getResources().getColor(R.color.cream));
-                progressDialog.setUpProgressDialog();
                 progressDialog.show();
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -53,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 }, 8000);
             }
         });
-        Button gif = findViewById(R.id.gif);
+        FrameLayout gif = findViewById(R.id.gif);
         gif.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
                 Uri myUri = Uri.fromFile(new File("//android_asset/sample_gif_1.gif"));
                 progressDialog.setGifLocation(myUri);
                 progressDialog.setLayoutColor(getResources().getColor(R.color.white));
-                progressDialog.setUpProgressDialog();
                 progressDialog.show();
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -71,16 +92,14 @@ public class MainActivity extends AppCompatActivity {
                 }, 8000);
             }
         });
-        Button lottie = findViewById(R.id.lottie);
+        FrameLayout lottie = findViewById(R.id.lottie);
         lottie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 progressDialog = new BeautifulProgressDialog(MainActivity.this, BeautifulProgressDialog.withLottie, null);
                 progressDialog.setLottieLocation("lottie_1.json");
                 progressDialog.setLottieLoop(true);
-                progressDialog.setLottieCompactPadding(true);
                 progressDialog.setLayoutColor(getResources().getColor(R.color.white));
-                progressDialog.setUpProgressDialog();
                 progressDialog.show();
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -90,8 +109,41 @@ public class MainActivity extends AppCompatActivity {
                 }, 8000);
             }
         });
+        /**
+        Button progressBar = findViewById(R.id.progressBar);
+        progressBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //progressDialog = new BeautifulProgressDialog(MainActivity.this, BeautifulProgressDialog.withProgressBar, null);
+                progressDialog.show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.dismiss();
+                    }
+                }, 8000);
+            }
+        });
+         **/
 
 
+
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if(animationDrawable != null && !animationDrawable.isRunning()){
+            animationDrawable.start();
+        }
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        if(animationDrawable != null && animationDrawable.isRunning()){
+            animationDrawable.stop();
+        }
     }
 
 }

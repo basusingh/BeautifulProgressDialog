@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="120dp"
     android:layout_height="wrap_content"
     android:id="@+id/parent"
     app:cardBackgroundColor="@android:color/white"
@@ -21,8 +21,8 @@
             android:scaleType="centerCrop"
             android:adjustViewBounds="true"
             android:layout_gravity="center_horizontal"
-            android:visibility="gone"
-            android:id="@+id/imageView"/>
+            android:id="@+id/imageView"
+            android:visibility="gone"/>
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie"
@@ -31,6 +31,14 @@
             android:layout_gravity="center_horizontal"
             android:visibility="gone"
             app:lottie_loop="true"/>
+
+        <ProgressBar
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/progressBar"
+            android:indeterminateTint="@android:color/holo_red_dark"
+            android:visibility="gone"/>
 
 
         <TextView

@@ -1,25 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:orientation="vertical">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:alpha="0"
+        android:id="@+id/backgroundImage"/>
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/colorBackground"
+        android:alpha="0.4"
+        android:background="@drawable/home_gradient_animation_list"/>
 
-    </com.google.android.material.appbar.AppBarLayout>
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical">
 
-    <include layout="@layout/content_main" />
+       <androidx.cardview.widget.CardView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           app:cardElevation="4dp"
+           app:cardCornerRadius="15dp"
+           app:cardBackgroundColor="@color/home_gradient_2_2"
+           android:layout_marginTop="200dp"
+           android:layout_gravity="center_horizontal">
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+           <FrameLayout
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="15dp"
+               android:layout_marginEnd="15dp"
+               android:paddingStart="30dp"
+               android:paddingEnd="30dp"
+               android:paddingTop="15dp"
+               android:paddingBottom="15dp"
+               android:clickable="true"
+               android:focusable="true"
+               android:background="?android:attr/selectableItemBackground"
+               android:id="@+id/image">
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textSize="15sp"
+                   android:textColor="@color/white"
+                   android:text="Show Image Dialog"
+                   android:gravity="center_horizontal"
+                   android:layout_gravity="center"
+                   android:fontFamily="@font/avenir_bold"/>
+           </FrameLayout>
+
+       </androidx.cardview.widget.CardView>
+
+
+       <androidx.cardview.widget.CardView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           app:cardElevation="4dp"
+           app:cardCornerRadius="15dp"
+           app:cardBackgroundColor="@color/home_gradient_2_2"
+           android:layout_marginTop="70dp"
+           android:layout_gravity="center_horizontal">
+
+           <FrameLayout
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="15dp"
+               android:layout_marginEnd="15dp"
+               android:paddingStart="30dp"
+               android:paddingEnd="30dp"
+               android:paddingTop="15dp"
+               android:paddingBottom="15dp"
+               android:clickable="true"
+               android:focusable="true"
+               android:background="?android:attr/selectableItemBackground"
+               android:id="@+id/gif">
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textSize="15sp"
+                   android:textColor="@color/white"
+                   android:text="Show GIF Dialog"
+                   android:gravity="center_horizontal"
+                   android:layout_gravity="center"
+                   android:fontFamily="@font/avenir_bold"/>
+           </FrameLayout>
+
+       </androidx.cardview.widget.CardView>
+
+
+       <androidx.cardview.widget.CardView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           app:cardElevation="4dp"
+           app:cardCornerRadius="15dp"
+           app:cardBackgroundColor="@color/home_gradient_2_2"
+           android:layout_marginTop="70dp"
+           android:layout_gravity="center_horizontal">
+
+           <FrameLayout
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="15dp"
+               android:layout_marginEnd="15dp"
+               android:paddingStart="30dp"
+               android:paddingEnd="30dp"
+               android:paddingTop="15dp"
+               android:paddingBottom="15dp"
+               android:clickable="true"
+               android:focusable="true"
+               android:background="?android:attr/selectableItemBackground"
+               android:id="@+id/lottie">
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textSize="15sp"
+                   android:textColor="@color/white"
+                   android:text="Show Lottie Dialog"
+                   android:gravity="center_horizontal"
+                   android:layout_gravity="center"
+                   android:fontFamily="@font/avenir_bold"/>
+           </FrameLayout>
+
+       </androidx.cardview.widget.CardView>
+
+
+       <Button
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center_horizontal"
+           android:layout_marginTop="20dp"
+           android:text="Show ProgressBar Dialog"
+           android:id="@+id/progressBar"
+           android:visibility="gone"/>
+
+   </LinearLayout>
+
+</RelativeLayout>

@@ -7,4 +7,20 @@
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
     <color name="cream">#fffdeb</color>
+
+    <color name="gradient_red_cream">#BE7E80</color>
+    <color name="gradient_red_cream_dark">#9E6189</color>
+
+    <color name="home_gradient_1">#F67280</color>
+    <color name="home_gradient_1_1">#7b3940</color>
+    <color name="home_gradient_2">#C06c84</color>
+    <color name="home_gradient_2_2">#603642</color>
+    <color name="home_gradient_2_2_light">#8f727a</color>
+    <color name="home_gradient_3">#6C5B7B</color>
+    <color name="home_gradient_3_3">#403649</color>
+    <color name="home_gradient_4">#355C7D</color>
+    <color name="home_gradient_4_4">#1f374b</color>
+    <color name="home_gradient_5">#F8B195</color>
+    <color name="home_gradient_5_5">#946a59</color>
+
 </resources>
