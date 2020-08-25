@@ -21,7 +21,6 @@ allprojects {
   ```
  Current Version:  [![](https://jitpack.io/v/basusingh/BeautifulProgressDialog.svg)](https://jitpack.io/#basusingh/BeautifulProgressDialog)
  
- **Create a Progress Dialog**
  ________________________________________________
  **Create a dialog**
  ```
