@@ -2,6 +2,8 @@
 Brush up your mobile app with customized Progress Dialog. Beautiful Progress Dialog is a small library that let you show custom Progress Dialog into your app. It can show static images, GIFs and the new Lottie Animation.
 
 ![GIF Dialog](View_GIF.gif)
+
+
 **View** can be of three types:
 1. Image
 2. GIF
@@ -126,14 +128,39 @@ removeMessage()
 setCancelableOnTouchOutside(boolean value)
 ```
 
- ![Image Dialog](View_Image.gif) ![Lottie Dialog](View_Lottie.gif)
+ ![GIF Dialog](View_GIF.gif) ![Image Dialog](View_Image.gif) ![Lottie Dialog](View_Lottie.gif)
 
 
 
 
 
 
-Please feel free to add new features to it. 
-I'm currently adding a Progress Bar and rounded corners to the view.
+Please feel free to customize it according to your need. I will be constantly adding new features.
+Currently, I'm currently adding a Progress Bar and rounded corners to the view.
 
 Cheers!
+
+___________________________________________________________________
+
+MIT License
+
+Copyright (c) 2020 Basu
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
