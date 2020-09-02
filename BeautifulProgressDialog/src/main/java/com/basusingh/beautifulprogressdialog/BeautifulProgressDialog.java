@@ -218,6 +218,14 @@ public class BeautifulProgressDialog {
     }
 
     /**
+     * Set color of the message
+     * @param color
+     */
+    public void setMessageColor(int color){
+        viewMessage.setTextColor(color);
+    }
+
+    /**
      * Set color of the progress bar.
      * @param color
      */
