@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 }, 8000);
             }
         });
+        
         FrameLayout gif = findViewById(R.id.gif);
         gif.setOnClickListener(new View.OnClickListener() {
             @Override
