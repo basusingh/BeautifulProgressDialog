@@ -2,6 +2,7 @@ package com.basusingh.beautifulprogressdialog.sample;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        
         backgroundImage = findViewById(R.id.backgroundImage);
         colorBackground = findViewById(R.id.colorBackground);
 

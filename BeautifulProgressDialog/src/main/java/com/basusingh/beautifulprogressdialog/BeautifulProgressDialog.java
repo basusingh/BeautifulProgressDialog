@@ -41,6 +41,8 @@ public class BeautifulProgressDialog {
     // public static final String withProgressBar = "withProgressBar";
     private static String viewType;
 
+    private Uri gifLocation;
+
     private static boolean lottieCompactPadding = false;
     LottieAnimationView viewAnimationView;
 
@@ -203,6 +205,20 @@ public class BeautifulProgressDialog {
         }
     }
 
+    /**
+     * Get status of Progress Dialog
+     * @return
+     */
+
+    public boolean isShowing(){
+        return alertDialog.isShowing();
+    }
+
+    /**
+     * Set color of the progress bar.
+     * @param color
+     */
+
     private void setProgressBarColor(int color){
         //viewProgressBar.getIndeterminateDrawable().setColorFilter(color, android.graphics.PorterDuff.Mode.SRC_IN);
     }
@@ -324,9 +340,7 @@ public class BeautifulProgressDialog {
      */
 
     public void setGifLocation(Uri gifLocation){
-        Glide.with(mContext)
-                .load(gifLocation)
-                .into(viewImageView);
+        this.gifLocation = gifLocation;
     }
 
     /**
@@ -393,6 +407,11 @@ public class BeautifulProgressDialog {
         if (viewType.equalsIgnoreCase(withLottie) && viewAnimationView != null){
             viewAnimationView.playAnimation();
         }
+        if(viewType.equalsIgnoreCase(withGIF) && gifLocation != null){
+            Glide.with(mContext)
+                    .load(gifLocation)
+                    .into(viewImageView);
+        }
         alertDialog.show();
     }
 
@@ -403,6 +422,10 @@ public class BeautifulProgressDialog {
     public void dismiss(){
         if (viewType.equalsIgnoreCase(withLottie) && viewAnimationView != null){
             viewAnimationView.cancelAnimation();
+        }
+        if(viewType.equalsIgnoreCase(withGIF)){
+            viewImageView = null;
+            viewImageView = dialogView.findViewById(R.id.imageView);
         }
         alertDialog.dismiss();
     }
