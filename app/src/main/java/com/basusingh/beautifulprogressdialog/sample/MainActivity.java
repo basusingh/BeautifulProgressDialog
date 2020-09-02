@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
         backgroundImage = findViewById(R.id.backgroundImage);
         colorBackground = findViewById(R.id.colorBackground);
 
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 progressDialog = new BeautifulProgressDialog(MainActivity.this, BeautifulProgressDialog.withGIF, null);
-                Uri myUri = Uri.fromFile(new File("//android_asset/sample_gif_1.gif"));
+                Uri myUri = Uri.fromFile(new File("//android_asset/gif_food_and_smile.gif"));
                 progressDialog.setGifLocation(myUri);
                 progressDialog.setLayoutColor(getResources().getColor(R.color.white));
                 progressDialog.show();
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         progressDialog.dismiss();
                     }
-                }, 8000);
+                }, 3000);
             }
         });
         FrameLayout lottie = findViewById(R.id.lottie);

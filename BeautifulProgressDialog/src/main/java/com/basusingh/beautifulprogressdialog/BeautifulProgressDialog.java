@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -30,6 +31,8 @@ import androidx.core.content.ContextCompat;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.gif.GifDrawable;
 
 import java.util.Objects;
 
@@ -410,6 +413,8 @@ public class BeautifulProgressDialog {
         if(viewType.equalsIgnoreCase(withGIF) && gifLocation != null){
             Glide.with(mContext)
                     .load(gifLocation)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
                     .into(viewImageView);
         }
         alertDialog.show();
@@ -424,8 +429,11 @@ public class BeautifulProgressDialog {
             viewAnimationView.cancelAnimation();
         }
         if(viewType.equalsIgnoreCase(withGIF)){
-            viewImageView = null;
-            viewImageView = dialogView.findViewById(R.id.imageView);
+            try{
+                ((GifDrawable)viewImageView.getDrawable()).stop();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
         }
         alertDialog.dismiss();
     }
