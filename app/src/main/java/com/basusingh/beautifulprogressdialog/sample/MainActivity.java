@@ -81,24 +81,24 @@ public class MainActivity extends AppCompatActivity {
         gif.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog = new BeautifulProgressDialog(MainActivity.this, BeautifulProgressDialog.withGIF, null);
+                progressDialog = new BeautifulProgressDialog(MainActivity.this, BeautifulProgressDialog.withGIF, "Please wait");
                 Uri myUri = Uri.fromFile(new File("//android_asset/gif_food_and_smile.gif"));
                 progressDialog.setGifLocation(myUri);
-                progressDialog.setLayoutColor(getResources().getColor(R.color.white));
+                progressDialog.setLayoutColor(getResources().getColor(R.color.BeautifulProgressDialogBg));
+                progressDialog.setMessageColor(getResources().getColor(R.color.white));
                 progressDialog.show();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         progressDialog.dismiss();
                     }
-                }, 3000);
+                }, 8000);
             }
         });
         FrameLayout lottie = findViewById(R.id.lottie);
         lottie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog.setViewType(BeautifulProgressDialog.withGIF);
                 progressDialog = new BeautifulProgressDialog(MainActivity.this, BeautifulProgressDialog.withLottie, null);
                 progressDialog.setLottieLocation("lottie_1.json");
                 progressDialog.setLottieLoop(true);

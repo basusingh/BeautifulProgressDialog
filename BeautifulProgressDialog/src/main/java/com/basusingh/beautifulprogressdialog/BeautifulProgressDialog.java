@@ -98,7 +98,6 @@ public class BeautifulProgressDialog {
 
 
         parent = dialogView.findViewById(R.id.parent);
-        parent.setBackgroundColor(android.R.color.white);
         parent.setElevation(3f);
         parent.setRadius(15f);
 
@@ -240,7 +239,7 @@ public class BeautifulProgressDialog {
      */
     @SuppressLint("ResourceAsColor")
     public void setLayoutColor(int color){
-        parent.setBackgroundColor(color);
+        parent.setCardBackgroundColor(color);
     }
 
     /**

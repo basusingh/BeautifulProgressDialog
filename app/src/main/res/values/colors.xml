@@ -11,6 +11,8 @@
     <color name="gradient_red_cream">#BE7E80</color>
     <color name="gradient_red_cream_dark">#9E6189</color>
 
+    <color name="BeautifulProgressDialogBg">#0DACB6</color>
+
     <color name="home_gradient_1">#F67280</color>
     <color name="home_gradient_1_1">#7b3940</color>
     <color name="home_gradient_2">#C06c84</color>
