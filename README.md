@@ -26,8 +26,8 @@ allprojects {
 	}
   ```
  Current Version:  [![](https://jitpack.io/v/basusingh/BeautifulProgressDialog.svg)](https://jitpack.io/#basusingh/BeautifulProgressDialog)
- 
- ________________________________________________
+
+
  **Create a dialog**
  ```
  //Params: Context, View Type, Text Message
@@ -35,6 +35,7 @@ allprojects {
  									BeautifulProgressDialog.withImage,
 									    "Please wait");
  ```
+ 
  
  
  **View Type:**
@@ -45,6 +46,7 @@ BeautifulProgressDialog.withLottie
 ```
 
 
+
 **Create an Image Dialog with Text Message**
 ```
 progressDialog = new BeautifulProgressDialog(MainActivity.this, BeautifulProgressDialog.withImage, "Please wait");
@@ -52,12 +54,14 @@ progressDialog.setImageLocation(getResources().getDrawable(R.drawable.burger_log
 progressDialog.setLayoutColor(getResources().getColor(R.color.cream));
 ```
 
+
 **Create a GIF Dialog without Text Message**
 ```
 progressDialog = new BeautifulProgressDialog(MainActivity.this, BeautifulProgressDialog.withGIF, null);
 Uri myUri = Uri.fromFile(new File("//android_asset/sample_gif_1.gif"));
 progressDialog.setGifLocation(myUri);
 ```
+
 
 **Create a Lottie Animation Dialog without Text Message**
 ```
@@ -67,17 +71,21 @@ progressDialog.setLottieLocation("lottie_1.json");
 progressDialog.setLottieLoop(true);
 ```
 
+
 **Show the Dialog**
 ```
 progressDialog.show();
 ```
+
 
 **Dismiss the Dialog**
 ```
 progressDialog.dismiss();
 ```
 
-_________________________________________________
+
+
+
 
 **Additional Style**
 
@@ -86,11 +94,14 @@ _________________________________________________
 progressDialog.setLayoutColor(getResources().getColor(R.color.MY_COLOR_NAME));
 ```
 
+
 **Change View Type**
 ```
 progressDialog.setViewType(BeautifulProgressDialog.withGIF);
 ```
 **Don't forget to change the source of each view type**
+
+
 
 Available methods:
 ```
@@ -106,27 +117,32 @@ setGifLocation(Uri gifLocation)
 setLottieLocation(String url)
 ```
 
+
 **Custom font for the message**
 ```
 //By default, the font is avenir_bold
 setFont(String font)
 ```
 
+
 **Change message**
 ```
 setMessage(String text)
 ```
+
 
 **Remove message**
 ```
 removeMessage()
 ```
 
+
 **Additional Methods:**
 ```
 //Dialog cancelable on touch outside
 setCancelableOnTouchOutside(boolean value)
 ```
+
 
  ![GIF Dialog](View_GIF.gif) ![Image Dialog](View_Image.gif) ![Lottie Dialog](View_Lottie.gif)
 
