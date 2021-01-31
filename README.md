@@ -151,8 +151,7 @@ setCancelableOnTouchOutside(boolean value)
 
 
 
-Please feel free to customize it according to your need. I will be constantly adding new features.
-Currently, I'm currently adding a Progress Bar and rounded corners to the view.
+Please feel free to customize it according to your need. Please note that the background can be set null also so that you can have customised edges (also rounded corners for more lively feel).
 
 Cheers!
 
