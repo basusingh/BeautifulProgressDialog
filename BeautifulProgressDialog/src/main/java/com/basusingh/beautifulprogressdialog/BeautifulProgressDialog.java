@@ -247,8 +247,7 @@ public class BeautifulProgressDialog {
      * @param radius
      */
 
-    //TODO
-    private void setLayoutRadius(float radius){
+    public void setLayoutRadius(float radius){
         parent.setRadius(radius);
     }
 
@@ -257,8 +256,7 @@ public class BeautifulProgressDialog {
      * @param elevation
      */
 
-    //TODO
-    private void setLayoutElevation(float elevation){
+    public void setLayoutElevation(float elevation){
         parent.setElevation(elevation);
     }
 
