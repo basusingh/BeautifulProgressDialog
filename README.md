@@ -94,6 +94,17 @@ progressDialog.dismiss();
 progressDialog.setLayoutColor(getResources().getColor(R.color.MY_COLOR_NAME));
 ```
 
+**Set Corner Radius**
+```
+//Radius should be in floating number
+progressDialog.setLayoutRadius(10f);
+```
+
+**Dialog Elevation**
+```
+//Elevation should be in floating number
+progressDialog.setLayoutElevation(5f);
+```
 
 **Change View Type**
 ```
